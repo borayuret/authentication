@@ -1,2 +1,2 @@
 # authentication
-Authentication with Node.js, Express, PostgreSQL, Sequelize, JWT, 
+Authentication with Node.js, Express, PostgreSQL, Sequelize, JWT
