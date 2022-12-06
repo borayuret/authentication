@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import errorMiddleware from './middleware/errorMiddleware'
+import config from './config'
 
 // create instance server
 const app = express();
@@ -14,7 +15,7 @@ const limiter = rateLimit({
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
 
-const PORT = 3000;
+const PORT = config.port || 3000
 
 
 // middleware to parse incoming requests
