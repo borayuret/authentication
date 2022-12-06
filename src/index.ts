@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import errorMiddleware from './middleware/errorMiddleware'
 import config from './config'
+import db from './database'
 
 // create instance server
 const app = express();
@@ -38,6 +39,23 @@ app.use(
       message: 'Too many requests from this IP, please try again after 15 minutes',
     })
   )
+
+
+// test db
+db.connect().then((client) => {
+    return client
+      .query('SELECT now()')
+      .then((res) => {
+        client.release()
+        console.log(res.rows[0].now)
+      })
+      .catch((err) => {
+        // Make sure to release the client before any error handling,
+        // just in case the error handling itself throws an error.
+        client.release()
+        console.log(err.stack)
+      })
+  })
 
 // add routing for path /
 app.get('/', (req, res) => {
