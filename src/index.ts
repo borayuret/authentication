@@ -1,7 +1,8 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import errorMiddleware from './middleware/errorMiddleware'
 
 // create instance server
 const app = express();
@@ -51,6 +52,16 @@ app.post('/', (req, res) => {
         message: 'Hello World from post',
         data: req.body
     })
+})
+
+// error handler middleware
+app.use(errorMiddleware)
+
+app.use((_: Request, res: Response) => {
+  res.status(404).json({
+    message:
+      'Ohh you are lost, read the API documentation to find your way back home 😂',
+  })
 })
 
 // start express server
